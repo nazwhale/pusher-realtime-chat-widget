@@ -180,7 +180,6 @@ PusherChatWidget._createHTML = function(appendTo) {
       '<button class="pusher-chat-widget-send-btn">Send</button>' +
     '</div>' +
     '<div class="pusher-chat-widget-footer">' +
-      '<a href="http://pusher.com">Pusher</a> powered realtime chat' +
     '</div>' +
   '</div>';
   var widget = $(html);
