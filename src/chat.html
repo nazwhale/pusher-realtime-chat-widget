@@ -18,10 +18,13 @@
     <script src="js/PusherChatWidget.js"></script>
     <script>
       $(function() {
-        var pusher = new Pusher("70fcab9dbb8014f2be42")
+        var pusher = new Pusher("510b0f3ebba673e6c3b2", {
+          cluster: 'eu',
+          encrypted: true
+        });
         var chatWidget = new PusherChatWidget(pusher, {
           appendTo: "#pusher_chat_widget",
-          chatEndPoint: "/chat"
+          chatEndPoint: '/chat'
         });
       });
     </script>
