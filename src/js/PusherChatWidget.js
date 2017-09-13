@@ -214,7 +214,7 @@ PusherChatWidget._buildListItem = function(activity) {
   var chatText = activity.body.replace(/\\('|&quot;)/g, '$1')
 
   var words = activity.body.split(" ");
-  var gifMe = (words[0] === "Gif" && words[1] === "me" && words[2] === "a");
+  var gifMe = (words[0] === "Gif" && words[1] === "me" && (words[2] === "a" || words[2] === "an" || words[2] === "some" ));
 
   if (gifMe === true) {
     var gifMessage;
@@ -223,7 +223,7 @@ PusherChatWidget._buildListItem = function(activity) {
       type: 'GET',
       url: 'http://api.giphy.com/v1/gifs/translate?api_key=38eeb75c370a443f997254f9ba22edb9&s=' + words[3],
       success: function(data) {
-        gifMessage = data.data.images.fixed_height.url;
+        gifMessage = data.data.images.fixed_width.url;
       }
     });
     chatText = '<img src="' + gifMessage + '" alt="gif"><img>';
