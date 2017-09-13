@@ -70,6 +70,7 @@ PusherChatWidget.prototype._chatMessageReceived = function(data) {
     this._messagesEl.html('');
   }
 
+
   var messageEl = PusherChatWidget._buildListItem(data);
   messageEl.hide();
   this._messagesEl.append(messageEl);
@@ -105,11 +106,32 @@ PusherChatWidget.prototype._sendChatButtonClicked = function() {
     return;
   }
 
+  var words = message.split(" ");
+  var gifMe = (words[0] === "Gif" && words[1] === "me" && (words[2] === "a" || words[2] === "an" || words[2] === "some" ));
+
+  //search giphy api with words after search request
+  words.splice(0, 3);
+  var searchTerm = words.join(" ");
+
+  if (gifMe === true) {
+    var gifMessage;
+    $.ajax({
+      async: false,
+      type: 'GET',
+      url: 'http://api.giphy.com/v1/gifs/translate?api_key=38eeb75c370a443f997254f9ba22edb9&s=' + searchTerm,
+      success: function(data) {
+        gifMessage = data.data.images.fixed_width.url;
+      }
+    });
+    message = gifMessage;
+  };
+
   var chatInfo = {
     nickname: nickname,
     email: email,
-    text: message
+    text: message,
   };
+
   this._sendChatMessage(chatInfo);
 };
 
@@ -211,26 +233,13 @@ PusherChatWidget._buildListItem = function(activity) {
               '</div>');
   content.append(user);
 
-  var chatText = activity.body.replace(/\\('|&quot;)/g, '$1')
+  var chatText = activity.body;
 
-  var words = activity.body.split(" ");
-  var gifMe = (words[0] === "Gif" && words[1] === "me" && (words[2] === "a" || words[2] === "an" || words[2] === "some" ));
-
-  if (gifMe === true) {
-    var gifMessage;
-    $.ajax({
-      async: false,
-      type: 'GET',
-      url: 'http://api.giphy.com/v1/gifs/translate?api_key=38eeb75c370a443f997254f9ba22edb9&s=' + words[3],
-      success: function(data) {
-        gifMessage = data.data.images.fixed_width.url;
-      }
-    });
-    chatText = '<img src="' + gifMessage + '" alt="gif"><img>';
+  if (chatText.substr(chatText.length - 4) === ".gif") {
+    chatText = '<img src="' + chatText + '" alt=".gif"><img>';
+  } else {
+    chatText = activity.body.replace(/\\('|&quot;)/g, '$1');
   };
-
-  console.log(chatText);
-
 
   var message = $('<div class="activity-row">' +
                     '<div class="text">' + chatText + '</div>' +
@@ -248,7 +257,6 @@ PusherChatWidget._buildListItem = function(activity) {
                 '</span>' +
               '</div>');
   content.append(time);
-
 
   return li;
 };
