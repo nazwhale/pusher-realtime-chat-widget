@@ -22,3 +22,5 @@ $ bundle exec ruby -rubygems chat.rb
 Finally, navigate to http://localhost:4567/ to see the side-by-side example or http://localhost:4567/chat.html to see the standalone example.
 
 Happy chatting!
+
+![Imgur](https://i.imgur.com/tBD3gBK.png)
