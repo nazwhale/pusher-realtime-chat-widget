@@ -8,10 +8,11 @@ First, clone the repo and navigate to the correct directory:
 
 ```
 $ git clone git@github.com:nazwhale/pusher-realtime-chat-widget.git
-$ cd src/ruby-sinatra
+$ cd pusher-realtime-chat-widget/src/ruby-sinatra
 ```
-Update the relevant depencencies using bundler:
+Install the relevant dependencies with [Bundler](http://bundler.io/):
 ```
+$ gem install bundler     
 $ bundle install
 ```
 And run the program with the help of [Sinatra](http://www.sinatrarb.com/):
