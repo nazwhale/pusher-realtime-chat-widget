@@ -1,4 +1,4 @@
-# Realtime Chat Widget using Pusher
+# Realtime Chat Widget
 
 A Realtime Chat Widget with a Ruby backend, made with the help of this [tutorial from Pusher](http://pusher.com/tutorials/realtime_chat_widget).
 
